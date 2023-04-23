@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-
-void InitTable(int table[5][5]);
-void ShowTable(int table[5][5]);
-void SelectNumber(int table[5][5]);
-int CheckBingo(int table[5][5]);
+void InitTable(int table[][5]);
+void Shuffle(int table[][5]);
+void ShowTable(int table[][5]);
+void SelectNumber(int table[][5]);
+int CheckBingo(int table[][5]);
 
 int main()
 {
@@ -18,16 +18,17 @@ int main()
 
 	while(isContinue)
 	{
-		InitTable(Table[5][5]);
+		InitTable(Table);
 
+		Shuffle(Table);
 
 		while (1)
 		{
 			system("cls");
 
-			int BingoCount = CheckBingo(Table[5][5]);
+			int BingoCount = CheckBingo(Table);
 
-			ShowTable(Table[5][5]);
+			ShowTable(Table);
 
 			printf("현재 빙고수 : %d\n\n", BingoCount);
 
@@ -37,9 +38,11 @@ int main()
 				break;
 			}
 
-			SelectNumber(Table[5][5]);
+			SelectNumber(Table);
 
-			CheckBingo(Table[5][5], BingoCount);
+			Sleep(2000);
+
+			CheckBingo(Table);
 		}
 
 		printf("1. 새 게임 0. 종료\n");
@@ -48,7 +51,7 @@ int main()
 	return 0;
 }
 
-void InitTable(int table[5][5])
+void InitTable(int table[][5])
 {
 	for (int i = 0; i < 5; i++)
 	{
@@ -57,21 +60,24 @@ void InitTable(int table[5][5])
 			table[i][j] = (i * 5) + j + 1;
 		}
 	}
+}
 
-	int src_index1 = rand() % 5;
-	int src_index2 = rand() % 5;
-	int dest_index1 = rand() % 5;
-	int dest_index2 = rand() % 5;
-
+void Shuffle(int table[][5])
+{
 	for (int i = 0; i < 100; i++)
 	{
+		int src_index1 = rand() % 5;
+		int src_index2 = rand() % 5;
+		int dest_index1 = rand() % 5;
+		int dest_index2 = rand() % 5;
+
 		int temp = table[src_index1][src_index2];
 		table[src_index1][src_index2] = table[dest_index1][dest_index2];
 		table[dest_index1][dest_index2] = temp;
-	} // 셔플이 왜 안되지?
+	}
 }
 
-void ShowTable(int table[5][5])
+void ShowTable(int table[][5])
 {
 	for (int i = 0; i < 5; i++)
 	{
@@ -84,7 +90,7 @@ void ShowTable(int table[5][5])
 	printf("\n");
 }
 
-void SelectNumber(int table[5][5])
+void SelectNumber(int table[][5])
 {
 	int number;
 
@@ -101,7 +107,7 @@ void SelectNumber(int table[5][5])
 	}
 }
 
-int CheckBingo(int table[5][5])
+int CheckBingo(int table[][5])
 {
 	int count = 0;
 
