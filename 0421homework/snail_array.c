@@ -30,9 +30,9 @@ int main()
 
 	printf("길이를 정하시오.(최대 50) ");
 	scanf_s("%d", &scale);
-	if (scale > 50 || scale < 0)
+	while (scale > 50 || scale < 0)
 	{
-		printf("다시 길이를 정하시오.(최대 50)");
+		printf("다시 길이를 정하시오.(최대 50) ");
 		scanf_s("%d", &scale);
 	}
 
